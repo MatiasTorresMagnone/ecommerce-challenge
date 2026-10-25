@@ -38,4 +38,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleItemNoEncontrado(ItemNoEncontradoException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(ProductoYaExisteException.class)
+    public ResponseEntity<String> handleProductoYaExiste(ProductoYaExisteException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
 }
