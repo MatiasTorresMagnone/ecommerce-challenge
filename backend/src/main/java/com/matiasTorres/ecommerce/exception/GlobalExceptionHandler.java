@@ -11,4 +11,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleMailYaExiste(MailYaExisteException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler(ProductoNoEncontradoException.class)
+    public ResponseEntity<String> handleProductoNoEncontrado(ProductoNoEncontradoException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 }
