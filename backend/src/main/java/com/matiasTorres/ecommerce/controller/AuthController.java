@@ -7,6 +7,7 @@ import com.matiasTorres.ecommerce.model.Usuario;
 import com.matiasTorres.ecommerce.security.DatosJWTToken;
 import com.matiasTorres.ecommerce.security.TokenService;
 import com.matiasTorres.ecommerce.service.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class AuthController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/login")
-    public ResponseEntity<DatosJWTToken> login(@RequestBody LoginRequestDTO dto){
+    public ResponseEntity<DatosJWTToken> login(@Valid @RequestBody LoginRequestDTO dto){
         var authToken = new UsernamePasswordAuthenticationToken(dto.mail(),dto.password());
         var usuarioAutenticado = authenticationManager.authenticate(authToken);
         var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
@@ -32,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UsuarioResponseDTO> saveUsuario(@RequestBody UsuarioRequestDTO dto){
+    public ResponseEntity<UsuarioResponseDTO> saveUsuario(@Valid @RequestBody UsuarioRequestDTO dto){
         UsuarioResponseDTO us = usuarioService.registrarUsuario(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(us);
     }
