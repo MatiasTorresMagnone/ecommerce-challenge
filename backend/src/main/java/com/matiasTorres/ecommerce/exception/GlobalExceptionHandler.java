@@ -59,4 +59,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleArchivoGrande(MaxUploadSizeExceededException ex) {
         return ResponseEntity.status(HttpStatus.CONTENT_TOO_LARGE).body("El archivo supera el máximo de 2 MB");
     }
+
+    @ExceptionHandler(OrdenNoEncontradaException.class)
+    public ResponseEntity<String> handleOrdenNoEncontrada(OrdenNoEncontradaException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 }
