@@ -7,9 +7,11 @@ import com.matiasTorres.ecommerce.exception.ProductoNoEncontradoException;
 import com.matiasTorres.ecommerce.exception.ProductoYaExisteException;
 import com.matiasTorres.ecommerce.model.Producto;
 import com.matiasTorres.ecommerce.repository.ProductoRepo;
+import com.matiasTorres.ecommerce.storage.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
 public class ProductoServiceImpl implements ProductoService{
 
     private final ProductoRepo productoRepo;
+    private final StorageService storageService;
 
     @Override
     public List<ProductoResponseDTO> findAllActivas() {
@@ -74,6 +77,21 @@ public class ProductoServiceImpl implements ProductoService{
 
         return toAdminDTO(productoRepo.save(producto));
     }
+
+    @Override
+    @Transactional
+    public ProductoResponseAdminDTO subirImagen(Long id, MultipartFile archivo) {
+        Producto producto = productoRepo.findById(id)
+                .orElseThrow(() -> new ProductoNoEncontradoException("Producto no encontrado"));
+
+        String anterior = producto.getImagen();
+        producto.setImagen(storageService.guardar(archivo));
+        Producto guardado = productoRepo.save(producto);
+
+        storageService.eliminar(anterior);
+        return toAdminDTO(guardado);
+    }
+
 
     private ProductoResponseDTO toDTO(Producto p) {
         return new ProductoResponseDTO(

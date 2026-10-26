@@ -6,9 +6,11 @@ import com.matiasTorres.ecommerce.service.ProductoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -36,6 +38,10 @@ public class AdministradorController {
         return ResponseEntity.ok(productoService.modificarProductoAdmin(id,productoModificado));
     }
 
+    @PostMapping(value = "/{id}/imagen", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProductoResponseAdminDTO> subirImagen(@PathVariable Long id, @RequestParam("archivo") MultipartFile archivo) {
+        return ResponseEntity.ok(productoService.subirImagen(id, archivo));
+    }
 
 
 }

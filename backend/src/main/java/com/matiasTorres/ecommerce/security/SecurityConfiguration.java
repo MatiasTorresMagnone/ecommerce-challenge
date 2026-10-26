@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req->
                         req.requestMatchers("/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/productos/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/imagenes/**").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
 

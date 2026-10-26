@@ -7,6 +7,7 @@ import com.matiasTorres.ecommerce.exception.ProductoNoEncontradoException;
 import com.matiasTorres.ecommerce.exception.ProductoYaExisteException;
 import com.matiasTorres.ecommerce.model.Producto;
 import com.matiasTorres.ecommerce.repository.ProductoRepo;
+import com.matiasTorres.ecommerce.storage.StorageService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,6 +30,9 @@ class ProductoServiceImplTest {
 
     @Mock
     private ProductoRepo productoRepo;
+
+    @Mock
+    private StorageService storageService;
 
     @InjectMocks
     private ProductoServiceImpl productoService;
@@ -44,7 +49,7 @@ class ProductoServiceImplTest {
     }
 
     @Test
-    @DisplayName("Lista los productos activos mapeados a DTO")
+    @DisplayName("Lista los productos activos, mapeados en DTO")
     void findAllActivas_conProductos_devuelveDTOs() {
         when(productoRepo.findAllByActivoTrue()).thenReturn(List.of(
                 crearProducto(1L, "Zapatilla", "100.00"),
@@ -181,6 +186,34 @@ class ProductoServiceImplTest {
     }
 
 
+    @Test
+    @DisplayName("Subir imagen a un producto con imagen remplaza su imagen")
+    void subirImagen_reemplazaImagenAnterior() {
+        Producto producto = crearProducto(
+                2L, "Campera", "250.00"
+        );
+
+        MultipartFile archivo = mock(MultipartFile.class);
+
+        when(productoRepo.findById(2L))
+                .thenReturn(Optional.of(producto));
+
+        when(storageService.guardar(archivo))
+                .thenReturn("campera-nueva.webp");
+
+        when(productoRepo.save(producto))
+                .thenReturn(producto);
+
+        ProductoResponseAdminDTO resultado =
+                productoService.subirImagen(2L, archivo);
+
+        assertEquals("campera-nueva.webp", producto.getImagen());
+        assertEquals("campera-nueva.webp", resultado.imagen());
+
+        verify(storageService).guardar(archivo);
+        verify(productoRepo).save(producto);
+        verify(storageService).eliminar("img-2.jpg");
+    }
 
 
 }
