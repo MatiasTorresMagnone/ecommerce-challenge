@@ -64,4 +64,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleOrdenNoEncontrada(OrdenNoEncontradaException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    @ExceptionHandler(CheckoutInvalidoException.class)
+    public ResponseEntity<String> handleCheckoutInvalido(CheckoutInvalidoException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(PagoException.class)
+    public ResponseEntity<String> handlePago(PagoException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                .body("No se pudo iniciar el pago. Intentá de nuevo en unos minutos.");
+    }
+
+    @ExceptionHandler(StripeNoConfiguradoException.class)
+    public ResponseEntity<String> handleStripeNoConfigurado(StripeNoConfiguradoException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ex.getMessage());
+    }
 }

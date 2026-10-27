@@ -12,4 +12,6 @@ public interface OrdenRepo extends JpaRepository<Orden,Long> {
 
 
     Optional<Orden> findByIdOrdenAndUsuario(Long idOrden, Usuario usuario);
+
+    Optional<Orden> findByStripeSessionId(String stripeSessionId);
 }

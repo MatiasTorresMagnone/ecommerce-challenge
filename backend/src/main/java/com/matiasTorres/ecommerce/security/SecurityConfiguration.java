@@ -39,6 +39,8 @@ public class SecurityConfiguration {
                         req.requestMatchers("/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/productos/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/imagenes/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/webhooks/stripe").permitAll()
+                                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
 
