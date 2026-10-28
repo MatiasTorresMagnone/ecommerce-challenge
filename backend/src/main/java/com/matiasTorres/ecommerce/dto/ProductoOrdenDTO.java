@@ -7,6 +7,7 @@ public record ProductoOrdenDTO(
         String nombreProducto,
         int cantidad,
         BigDecimal precioUnitario,
-        BigDecimal subtotal
+        BigDecimal subtotal,
+        String imagen
 ) {
 }

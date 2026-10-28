@@ -42,7 +42,8 @@ public class OrdenServiceImpl implements OrdenService{
                         d.getProducto().getNombre(),
                         d.getCantidad(),
                         d.getPrecioUnitario(),
-                        d.getSubtotal()))
+                        d.getSubtotal(),
+                        d.getProducto().getImagen()))
                 .toList();
 
         return new OrdenDetalleResponseDTO(

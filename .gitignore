@@ -1,8 +1,26 @@
+# IDEs y SO
 .idea/
 *.iml
 *.iws
 *.ipr
+.vscode/
 .DS_Store
 Thumbs.db
-backend/target/
+
+# Backend (Java / Maven)
 target/
+backend/target/
+*.log
+
+# Almacenamiento local de imágenes subidas
+uploads/
+
+# Frontend (Node / Vite)
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+
+# Variables de entorno (conservar solo los .env.example)
+*.env
+!*.env.example
