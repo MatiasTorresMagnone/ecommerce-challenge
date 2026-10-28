@@ -287,6 +287,34 @@ main {
     justify-content: space-between;
     flex-wrap: wrap;
   }
+
+  .nav-autenticacion {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .navbar .nav-ingresar,
+    .navbar .nav-registrarse {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+    .navbar .nav-ingresar {
+      color: #425b76;
+      background: #f0f4f8;
+      border: 1px solid #d6dfe8;
+    }
+    .navbar .nav-registrarse {
+      color: #ffffff;
+      background: #425b76;
+    }
 }
 
 @media (min-width: 901px) and (max-width: 1150px) {
@@ -638,28 +666,47 @@ tbody tr:hover {
    ============================== */
 
 .badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 700;
+  line-height: 1;
   white-space: nowrap;
+  text-transform: uppercase;
 }
 
-.badge.PAGADA {
-  color: #146c43;
-  background: #e6f6ec;
+/* PAGADA */
+.badge.PAGADA,
+.badge.pagada,
+.resumen-linea .badge.PAGADA,
+.resumen-linea .badge.pagada {
+  color: #146c43 !important;
+  background-color: #e6f6ec !important;
 }
 
-.badge.PENDIENTE {
-  color: #8a6100;
-  background: #fff4cc;
+/* PENDIENTE */
+.badge.PENDIENTE,
+.badge.pendiente,
+.resumen-linea .badge.PENDIENTE,
+.resumen-linea .badge.pendiente {
+  color: #8a6100 !important;
+  background-color: #fff4cc !important;
 }
 
+/* FALLIDA / CANCELADA */
 .badge.FALLIDA,
-.badge.CANCELADA {
-  color: #b3261e;
-  background: #fdecea;
+.badge.fallida,
+.badge.CANCELADA,
+.badge.cancelada,
+.resumen-linea .badge.FALLIDA,
+.resumen-linea .badge.fallida,
+.resumen-linea .badge.CANCELADA,
+.resumen-linea .badge.cancelada {
+  color: #b3261e !important;
+  background-color: #fdecea !important;
 }
 
 /* ==============================
@@ -701,6 +748,10 @@ tbody tr:hover {
 
   .producto-tabla {
     gap: 0.65rem;
+  }
+
+  .producto-tabla span {
+    display: none;
   }
 
   .producto-miniatura {
@@ -1224,6 +1275,8 @@ tbody tr:hover {
 }
 
 .boton-editar {
+  min-width: 65px;
+  text-align: center;
   color: #425b76;
   background: #eef2f6;
   border: 1px solid #d6dfe8;
@@ -1234,6 +1287,8 @@ tbody tr:hover {
 }
 
 .boton-borrar {
+  min-width: 92px;
+  text-align: center;
   color: #c93646;
   background: #fff5f5;
   border: 1px solid #f3d5d8;
