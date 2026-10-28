@@ -24,12 +24,12 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     public List<ProductoResponseDTO> findAllActivas() {
-        return productoRepo.findAllByActivoTrue().stream().map(this::toDTO).toList();
+        return productoRepo.findAllByActivoTrueOrderByIdProductoAsc().stream().map(this::toDTO).toList();
     }
 
     @Override
     public List<ProductoResponseDTO> findByNombre(String nombre) {
-        List<Producto> productos = productoRepo.findByNombreContainingIgnoreCaseAndActivoTrue(nombre);
+        List<Producto> productos = productoRepo.findByNombreContainingIgnoreCaseAndActivoTrueOrderByIdProductoAsc(nombre);
         return productos.stream().map(this::toDTO).toList();
     }
 
@@ -42,7 +42,7 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     public List<ProductoResponseAdminDTO> findAll() {
-        return productoRepo.findAll().stream().map(this::toAdminDTO).toList();
+        return productoRepo.findAllByOrderByIdProductoAsc().stream().map(this::toAdminDTO).toList();
     }
 
     @Override
