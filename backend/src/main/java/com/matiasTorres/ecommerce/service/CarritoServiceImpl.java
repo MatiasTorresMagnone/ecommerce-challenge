@@ -37,7 +37,7 @@ public class CarritoServiceImpl implements CarritoService{
             return new CarritoResponseDTO(List.of(), BigDecimal.ZERO);
         }
 
-        List<CarritoItemResponseDTO> items = carritoItemRepo.findByCarrito(carrito.get()).stream()
+        List<CarritoItemResponseDTO> items = carritoItemRepo.findByCarritoOrderByIdCarritoItemAsc(carrito.get()).stream()
                 .map(this::toItemDTO)
                 .toList();
 

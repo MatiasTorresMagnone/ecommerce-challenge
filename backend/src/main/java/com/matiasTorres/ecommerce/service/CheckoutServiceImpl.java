@@ -44,7 +44,7 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         Carrito carrito = carritoRepo.findByUsuario(usuario)
                 .orElseThrow(() -> new CheckoutInvalidoException("El usuario no tiene un carrito"));
-        List<CarritoItem> items = carritoItemRepo.findByCarrito(carrito);
+        List<CarritoItem> items = carritoItemRepo.findByCarritoOrderByIdCarritoItemAsc(carrito);
         if (items.isEmpty()) {
             throw new CheckoutInvalidoException("El carrito está vacío");
         }
