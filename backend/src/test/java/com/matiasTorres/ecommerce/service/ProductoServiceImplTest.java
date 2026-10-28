@@ -51,7 +51,7 @@ class ProductoServiceImplTest {
     @Test
     @DisplayName("Lista los productos activos, mapeados en DTO")
     void findAllActivas_conProductos_devuelveDTOs() {
-        when(productoRepo.findAllByActivoTrue()).thenReturn(List.of(
+        when(productoRepo.findAllByActivoTrueOrderByIdProductoAsc()).thenReturn(List.of(
                 crearProducto(1L, "Zapatilla", "100.00"),
                 crearProducto(2L, "Remera", "25.50")));
 
@@ -66,7 +66,7 @@ class ProductoServiceImplTest {
     @Test
     @DisplayName("Sin productos activos devuelve lista vacía")
     void findAllActivas_sinProductos_devuelveListaVacia() {
-        when(productoRepo.findAllByActivoTrue()).thenReturn(List.of());
+        when(productoRepo.findAllByActivoTrueOrderByIdProductoAsc()).thenReturn(List.of());
 
         assertTrue(productoService.findAllActivas().isEmpty());
     }
@@ -74,20 +74,20 @@ class ProductoServiceImplTest {
     @Test
     @DisplayName("Buscar por nombre devuelve las coincidencias")
     void findByNombre_conCoincidencias_devuelveDTOs() {
-        when(productoRepo.findByNombreContainingIgnoreCaseAndActivoTrue("zapa"))
+        when(productoRepo.findByNombreContainingIgnoreCaseAndActivoTrueOrderByIdProductoAsc("zapa"))
                 .thenReturn(List.of(crearProducto(1L, "Zapatilla", "100.00")));
 
         List<ProductoResponseDTO> resultado = productoService.findByNombre("zapa");
 
         assertEquals(1, resultado.size());
         assertEquals("Zapatilla", resultado.get(0).nombre());
-        verify(productoRepo).findByNombreContainingIgnoreCaseAndActivoTrue("zapa");
+        verify(productoRepo).findByNombreContainingIgnoreCaseAndActivoTrueOrderByIdProductoAsc("zapa");
     }
 
     @Test
     @DisplayName("Buscar por nombre sin coincidencias devuelve lista vacía")
     void findByNombre_sinCoincidencias_devuelveListaVacia() {
-        when(productoRepo.findByNombreContainingIgnoreCaseAndActivoTrue("xyz"))
+        when(productoRepo.findByNombreContainingIgnoreCaseAndActivoTrueOrderByIdProductoAsc("xyz"))
                 .thenReturn(List.of());
 
         assertTrue(productoService.findByNombre("xyz").isEmpty());

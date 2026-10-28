@@ -93,7 +93,7 @@ public class CarritoServiceImplTest {
 
         assertTrue(resultado.items().isEmpty());
         assertEquals(0, BigDecimal.ZERO.compareTo(resultado.total()));
-        verify(carritoItemRepo, never()).findByCarrito(any());
+        verify(carritoItemRepo, never()).findByCarritoOrderByIdCarritoItemAsc(any());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class CarritoServiceImplTest {
         Producto remera = crearProducto(2L, "Remera", "25.50");
 
         when(carritoRepo.findByUsuario(usuario)).thenReturn(Optional.of(carrito));
-        when(carritoItemRepo.findByCarrito(carrito)).thenReturn(List.of(
+        when(carritoItemRepo.findByCarritoOrderByIdCarritoItemAsc(carrito)).thenReturn(List.of(
                 crearItem(100L, carrito, zapatilla, 2),
                 crearItem(101L, carrito, remera, 3)));
 
@@ -130,7 +130,7 @@ public class CarritoServiceImplTest {
         when(carritoRepo.save(any(Carrito.class))).thenReturn(nuevo);
         when(productoRepo.findByIdProductoAndActivoTrue(1L)).thenReturn(Optional.of(producto));
         when(carritoItemRepo.findByCarritoAndProducto(nuevo, producto)).thenReturn(Optional.empty());
-        when(carritoItemRepo.findByCarrito(nuevo)).thenReturn(List.of());
+        when(carritoItemRepo.findByCarritoOrderByIdCarritoItemAsc(nuevo)).thenReturn(List.of());
 
         carritoService.agregarProducto(usuario, new CarritoRequestDTO(1L, 2));
 
@@ -149,7 +149,7 @@ public class CarritoServiceImplTest {
         when(carritoRepo.findByUsuario(usuario)).thenReturn(Optional.of(carrito));
         when(productoRepo.findByIdProductoAndActivoTrue(1L)).thenReturn(Optional.of(producto));
         when(carritoItemRepo.findByCarritoAndProducto(carrito, producto)).thenReturn(Optional.empty());
-        when(carritoItemRepo.findByCarrito(carrito)).thenReturn(List.of());
+        when(carritoItemRepo.findByCarritoOrderByIdCarritoItemAsc(carrito)).thenReturn(List.of());
 
         carritoService.agregarProducto(usuario, new CarritoRequestDTO(1L, 2));
 
@@ -172,7 +172,7 @@ public class CarritoServiceImplTest {
         when(carritoRepo.findByUsuario(usuario)).thenReturn(Optional.of(carrito));
         when(productoRepo.findByIdProductoAndActivoTrue(1L)).thenReturn(Optional.of(producto));
         when(carritoItemRepo.findByCarritoAndProducto(carrito, producto)).thenReturn(Optional.of(existente));
-        when(carritoItemRepo.findByCarrito(carrito)).thenReturn(List.of(existente));
+        when(carritoItemRepo.findByCarritoOrderByIdCarritoItemAsc(carrito)).thenReturn(List.of(existente));
 
         carritoService.agregarProducto(usuario, new CarritoRequestDTO(1L, 3));
 
@@ -207,7 +207,7 @@ public class CarritoServiceImplTest {
 
         when(carritoItemRepo.findById(100L)).thenReturn(Optional.of(item));
         when(carritoRepo.findByUsuario(usuario)).thenReturn(Optional.of(carrito));
-        when(carritoItemRepo.findByCarrito(carrito)).thenReturn(List.of(item));
+        when(carritoItemRepo.findByCarritoOrderByIdCarritoItemAsc(carrito)).thenReturn(List.of(item));
 
         CarritoResponseDTO resultado = carritoService.modificarCantidad(usuario, 100L, 5);
 
@@ -241,7 +241,7 @@ public class CarritoServiceImplTest {
 
         when(carritoItemRepo.findById(100L)).thenReturn(Optional.of(item));
         when(carritoRepo.findByUsuario(usuario)).thenReturn(Optional.of(carrito));
-        when(carritoItemRepo.findByCarrito(carrito)).thenReturn(List.of());
+        when(carritoItemRepo.findByCarritoOrderByIdCarritoItemAsc(carrito)).thenReturn(List.of());
 
         CarritoResponseDTO resultado = carritoService.eliminarItem(usuario, 100L);
 
