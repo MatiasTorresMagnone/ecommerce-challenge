@@ -23,7 +23,7 @@ El proyecto implementa un backend en **Spring Boot 4.1.2** con persistencia en *
   - Generación de órdenes con congelamiento de precios
   - Vaciado automático del carrito una vez confirmado el pago.
 - **Historial y Detalle de Órdenes**:
-  - Consulta de compras anteriores y seguimiento de estados (`PENDIENTE`, `PAGADA`).
+  - Consulta de compras anteriores y seguimiento de estados (`PENDIENTE`, `PAGADA`, `CANCELADA`).
 - **Panel Administrativo (`/admin`)**:
   - Gestión de productos (creación, edición y activación/desactivación).
   - Subida y reemplazo de imágenes locales con validación de tipo MIME (`JPEG`, `PNG`, `WEBP`) y límite de tamaño (máx. 2 MB).
@@ -217,7 +217,7 @@ Para comprobar el flujo completo, mantené activa la Stripe CLI y verificá que 
 
 ## ⚠️ Limitaciones conocidas
 
-- Las órdenes abandonadas quedan `PENDIENTE` hasta que la sesión de Stripe expira (24 h); la cancelación automática requiere que el webhook correspondiente se reciba y procese correctamente.
+- Las órdenes abandonadas quedan `PENDIENTE` hasta que la sesión de Stripe expira (24 h); la cancelación automática requiere que el webhook correspondiente se reciba y procese correctamente (lo que requiere mantener corriendo `stripe listen` en desarrollo local) o hasta que se fuerce su cierre ejecutando el comando de expiración en la Stripe CLI (`stripe checkout sessions expire <session_id>`).
 - El logout no invalida el token en el servidor; el JWT sigue siendo válido hasta que vence (2 horas).
 - El token JWT se guarda en `localStorage`.
 - Los tests E2E dejan usuarios y un producto de prueba en la base de datos.
