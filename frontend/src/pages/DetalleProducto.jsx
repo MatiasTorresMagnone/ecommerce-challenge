@@ -72,11 +72,10 @@ export default function DetalleProducto() {
 
       <div className="detalle-producto">
         <div className="detalle-imagen">
-          {producto.imagen ? (
-            <img src={imagenUrl(producto.imagen)} alt={producto.nombre} />
-          ) : (
-            <div className="sin-imagen">Sin imagen</div>
-          )}
+          <img
+            src={producto.imagen ? imagenUrl(producto.imagen) : '/imagen_default.png'}
+            alt={producto.nombre}
+          />
         </div>
 
         <div className="detalle-info">
