@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import RutaProtegida from './components/RutaProtegida';
+import RutaPublica from './components/RutaPublica';
 import Login from './pages/Login';
 import Registro from './pages/Registro';
 import Carrito from './pages/Carrito';
@@ -19,9 +20,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Catalogo />} />
         <Route path="/productos/:id" element={<DetalleProducto />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Registro />} />
 
+        <Route element={<RutaPublica />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
+        </Route>
         <Route element={<RutaProtegida />}>
           <Route path="/carrito" element={<Carrito />}/>
           <Route path="/checkout/exito" element={<CheckoutExito  />} />
